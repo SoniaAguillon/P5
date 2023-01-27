@@ -7,8 +7,10 @@ extern void Configura_Reg_PWM1(uint16_t freq)
     SYSCTL->RCGCPWM |= (1<<0); //Enable reloj de modulo PWM0 pag 354 ------------    Se habilita reloj del modulo 0   
     SYSCTL->RCGCGPIO |= (1<<1); //Habilitar reloj de GPIO Puerto B  pin 4 (Solo se esta poniendo 1 del puerto b)   - Pag 1233
    // GPIOF->AFSEL |= (1<<3)|(1<<2)|(1<<1); //Control de registros ya sea por GPIO o Otros Pag 672    //ESTO SI SE COMENTA
-    SYSCTL->RCC |=(1<<20);  //Activamos USEPWMDIV para dividir la señal del reloj 
+    
     SYSCTL->RCC &= 0xFFF0FFFF; //Indicamos en los pines 17-19 que se divida entre 2
+    SYSCTL->RCC |=(1<<20);  //Activamos USEPWMDIV para dividir la señal del reloj 
+    SYSCTL->RCC |= 0xFFF4FFFF; //Indicamos en los pines 17-19 que se divida entre 2
     
     GPIOB->AFSEL |= (1<<4); //Indicamos que queremos una funcion alterna en el pin b4 
     GPIOB->PCTL |= 0x00040000; //Combinado con la tabla Pag 1351 y el registro PCTL le digo que es pwm Pag 689
@@ -27,10 +29,10 @@ extern void Configura_Reg_PWM1(uint16_t freq)
 
     //SE COMIENZAN A HACER LOS CALCULOS 
 
-    PWM0->_1_LOAD = 2500; //cuentas=fclk/fpwm  para 1khz cuentas = (25,000,000/10000)= 2500 ***Se fija a 2499 porque es 2500-1 pq inicia en 0
+    PWM0->_1_LOAD = 50000; //cuentas=fclk/fpwm  para 1khz cuentas = (25,000,000/10000)= 2500 ***Se fija a 2499 porque es 2500-1 pq inicia en 0
     //Se utilizo un duty cycle de 20%
-    PWM0->_1_CMPB = 2000; // El duty cycle es de 80% (Es el 80% de 2499)
-    PWM0->_1_CMPA = 2000; //El duty cycle es 80%
+    PWM0->_1_CMPB = 40000; // El duty cycle es de 80% (Es el 80% de 2499)
+    PWM0->_1_CMPA = 40000; //El duty cycle es 80%
     
     PWM0->_1_CTL |= (1<<0);// Se habilita el generador 1 del PWM0
     PWM0->ENABLE = (1<<2); //habilitar el PWM2EN (Es ese porque es el modulo 0 generador 1) bloque pa que pase Pag 1247
