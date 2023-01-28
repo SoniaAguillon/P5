@@ -19,7 +19,8 @@ int main(void)
 
    // uint16_t Result[2];
    // uint16_t duty[2];
-    Configurar_PLL(_20MHZ);  //Confiuracion de velocidad de reloj
+    Configurar_PLL(_50MHZ);  //Confiuracion de velocidad de reloj - Experimento 1
+    //Configurar_PLL(_20MHZ);  //Confiuracion de velocidad de reloj - Experimento 2    
    //Configura_Reg_ADC0();
    //Configurar_UART7();//Yo FCLK 50MHZ Baudrate 57600
     //Configurar_GPIO(); //Se configura GPIO
